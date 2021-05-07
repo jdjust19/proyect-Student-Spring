@@ -1,25 +1,45 @@
 package com.juan.diego.proyecto.student.dto;
 
+import com.juan.diego.proyecto.student.entity.Student;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@AllArgsConstructor
 public class EstudianteInputDto {
     private String surname;
-    @NotNull
     private String company_email;
-    @NotNull
     private String personal_email;
-    @NotNull
     private String city;
-    @NotNull
-    private String numhoursWeek;
+    private Integer numhoursWeek;
     private String comments;
-    @NotNull
     private String branch;
-    @NotNull
     private Boolean active;
-    @NotNull
     private Date createdDate;
-    
     private Date terminationDate;
+
+    public Student getStudent(){
+        Student student = new Student();
+
+        student.setSurname(surname);
+        student.setCompanyEmail(company_email);
+        student.setPersonalEmail(personal_email);
+        student.setCity(city);
+        student.setNumHoursWeek(numhoursWeek);
+        student.setComents(comments);
+        student.setBranch(branch);
+        student.setActive(active);
+        student.setCreatedDate(createdDate);
+        student.setTerminationDate(terminationDate);
+
+        return student;
+    }
+
+    public static EstudianteInputDto getEstudianteInput(Student student){
+        return new EstudianteInputDto(student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
+                    student.getCity(), student.getNumHoursWeek(), student.getComents(), student.getBranch(),
+                    student.isActive(), student.getCreatedDate(),student.getTerminationDate());
+    }
 }

@@ -1,14 +1,16 @@
 package com.juan.diego.proyecto.student.entity;
 
 
-
-
-
+import lombok.Getter;
+import lombok.Setter;
 import javax.persistence.*;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +20,10 @@ public class Student {
 //    )
     private String idStudent;
     @NotNull
+    @Column(unique = true)
     private String name;
     @NotNull
+    @Column(unique = true)
     private String surname;
     @NotNull
     @Column(unique = true)
@@ -42,5 +46,4 @@ public class Student {
 
     private Date terminationDate;
 
-    
 }
