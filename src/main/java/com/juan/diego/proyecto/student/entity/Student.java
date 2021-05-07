@@ -1,7 +1,9 @@
 package com.juan.diego.proyecto.student.entity;
 
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 
@@ -11,6 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +23,8 @@ public class Student {
 //    )
     private String idStudent;
     @NotNull
-    @Column(unique = true)
     private String name;
     @NotNull
-    @Column(unique = true)
     private String surname;
     @NotNull
     @Column(unique = true)

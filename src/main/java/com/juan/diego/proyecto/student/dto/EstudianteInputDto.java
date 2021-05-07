@@ -3,11 +3,13 @@ package com.juan.diego.proyecto.student.dto;
 import com.juan.diego.proyecto.student.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @AllArgsConstructor
+@Getter
 public class EstudianteInputDto {
     private String surname;
     private String company_email;
@@ -25,6 +27,7 @@ public class EstudianteInputDto {
     public Student getStudent() throws Exception {
         if (isStudentDateValid) {
             Student student = new Student();
+            student.setName("Hola");
             student.setSurname(surname);
             student.setCompanyEmail(company_email);
             student.setPersonalEmail(personal_email);
