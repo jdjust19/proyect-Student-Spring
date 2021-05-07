@@ -20,21 +20,24 @@ public class EstudianteInputDto {
     private Date createdDate;
     private Date terminationDate;
 
-    public Student getStudent(){
-        Student student = new Student();
+    private final boolean isStudentDateValid= (terminationDate == null || createdDate.before(terminationDate));
 
-        student.setSurname(surname);
-        student.setCompanyEmail(company_email);
-        student.setPersonalEmail(personal_email);
-        student.setCity(city);
-        student.setNumHoursWeek(numhoursWeek);
-        student.setComents(comments);
-        student.setBranch(branch);
-        student.setActive(active);
-        student.setCreatedDate(createdDate);
-        student.setTerminationDate(terminationDate);
-
-        return student;
+    public Student getStudent() throws Exception {
+        if (isStudentDateValid) {
+            Student student = new Student();
+            student.setSurname(surname);
+            student.setCompanyEmail(company_email);
+            student.setPersonalEmail(personal_email);
+            student.setCity(city);
+            student.setNumHoursWeek(numhoursWeek);
+            student.setComents(comments);
+            student.setBranch(branch);
+            student.setActive(active);
+            student.setCreatedDate(createdDate);
+            student.setTerminationDate(terminationDate);
+            return student;
+        }
+        throw new Exception("El estudiante no es valido");
     }
 
     public static EstudianteInputDto getEstudianteInput(Student student){
