@@ -1,6 +1,8 @@
 package com.juan.diego.proyecto.student.dto;
 
 import com.juan.diego.proyecto.student.entity.Student;
+import com.juan.diego.proyecto.student.enums.Branch;
+import com.juan.diego.proyecto.student.exception.StudentBadRequestException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -18,7 +20,7 @@ public class EstudianteInputDto {
     private String city;
     private Integer numhoursWeek;
     private String comments;
-    private String branch;
+    private Branch branch;
     private Boolean active;
     private Date createdDate;
     private Date terminationDate;
@@ -41,7 +43,7 @@ public class EstudianteInputDto {
             student.setTerminationDate(terminationDate);
             return student;
         }
-        throw new Exception("El estudiante no es valido");
+        throw new StudentBadRequestException();
     }
 
     public static EstudianteInputDto getEstudianteInput(Student student){

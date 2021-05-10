@@ -1,6 +1,7 @@
 package com.juan.diego.proyecto.student.dto;
 
 import com.juan.diego.proyecto.student.entity.Student;
+import com.juan.diego.proyecto.student.enums.Branch;
 import lombok.AllArgsConstructor;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public class EstudianteSearchInputDto {
     private String city;
     private Integer numhoursWeek;
     private String comments;
-    private String branch;
+    private Branch branch;
     private Boolean active;
 
     private Date createdDate;

@@ -1,6 +1,7 @@
 package com.juan.diego.proyecto.student.entity;
 
 
+import com.juan.diego.proyecto.student.enums.Branch;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,8 @@ public class Student {
 
     private String coments;
     @NotNull
-    private String branch;
+    @Enumerated(EnumType.ORDINAL)
+    private Branch branch;
     @NotNull
     private boolean active;
     @NotNull
