@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 public class EstudianteInputDto {
+    private String name;
     private String surname;
     private String company_email;
     private String personal_email;
@@ -27,7 +28,7 @@ public class EstudianteInputDto {
     public Student getStudent() throws Exception {
         if (isStudentDateValid) {
             Student student = new Student();
-            student.setName("Hola");
+            student.setName(name);
             student.setSurname(surname);
             student.setCompanyEmail(company_email);
             student.setPersonalEmail(personal_email);
@@ -44,7 +45,7 @@ public class EstudianteInputDto {
     }
 
     public static EstudianteInputDto getEstudianteInput(Student student){
-        return new EstudianteInputDto(student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
+        return new EstudianteInputDto(student.getName(),student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
                     student.getCity(), student.getNumHoursWeek(), student.getComents(), student.getBranch(),
                     student.isActive(), student.getCreatedDate(),student.getTerminationDate());
     }

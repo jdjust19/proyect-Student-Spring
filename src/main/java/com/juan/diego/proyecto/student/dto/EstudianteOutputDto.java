@@ -8,6 +8,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class EstudianteOutputDto {
     private String id;
+    private String name;
     private String surname;
     private String company_email;
     private String personal_email;
@@ -20,7 +21,7 @@ public class EstudianteOutputDto {
     private Date terminationDate;
 
     public static EstudianteOutputDto getEstudianteOutput(Student student){
-        return new EstudianteOutputDto(student.getIdStudent(),student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
+        return new EstudianteOutputDto(student.getIdStudent(), student.getName(), student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
                 student.getCity(), student.getNumHoursWeek(), student.getComents(), student.getBranch(),
                 student.isActive(), student.getCreatedDate(),student.getTerminationDate());
     }

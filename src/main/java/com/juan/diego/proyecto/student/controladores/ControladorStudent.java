@@ -3,6 +3,7 @@ package com.juan.diego.proyecto.student.controladores;
 import com.juan.diego.proyecto.student.dto.EstudianteInputDto;
 import com.juan.diego.proyecto.student.dto.EstudianteOutputDto;
 import com.juan.diego.proyecto.student.entity.Student;
+import com.juan.diego.proyecto.student.exception.StudentNotFoundException;
 import com.juan.diego.proyecto.student.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,28 +27,34 @@ public class ControladorStudent {
     }
 
     @PostMapping
-    //"Hola" es para comprobar el nombre, ya que estudianteInputDto no contiene nombre
-    //Esto lo solucionaremos mas adelante
     public void addStudent(@RequestBody EstudianteInputDto estudianteInputDto) throws Exception {
-        if (!studentRepository.existsStudentByNameAndSurname("Hola",estudianteInputDto.getSurname())) {
+        if (!studentRepository.existsStudentByNameAndSurname(estudianteInputDto.getName(),estudianteInputDto.getSurname())) {
             Student student = estudianteInputDto.getStudent();
             studentRepository.save(student);
             return;
         }
         throw new Exception("Ya existe un usuario con ese nombre y apellidos");
-
     }
 
     @PutMapping("{id}")
     public void updateStudent(@PathVariable String id, @RequestBody EstudianteInputDto estudianteInputDto) throws Exception {
         if (studentRepository.existsById(id)){
-            if (!studentRepository.existsStudentByNameAndSurname("Hola",estudianteInputDto.getSurname())) {
+            if (!studentRepository.existsStudentByNameAndSurname(estudianteInputDto.getName(), estudianteInputDto.getSurname())) {
                 Student student = estudianteInputDto.getStudent();
                 studentRepository.save(student);
                 return;
             }
             throw new Exception("Ya existe un usuario con ese nombre y apellidos");
         }
-        throw new Exception("No existe un usuario con ese id");
+        throw new StudentNotFoundException();
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteStudent(@PathVariable String id) {
+        if (studentRepository.existsById(id)){
+            studentRepository.deleteById(id);
+            return;
+        }
+        throw new StudentNotFoundException();
     }
 }

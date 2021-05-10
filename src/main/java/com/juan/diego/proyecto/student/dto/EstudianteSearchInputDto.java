@@ -7,6 +7,7 @@ import java.util.Date;
 
 @AllArgsConstructor
 public class EstudianteSearchInputDto {
+    private String name;
     private String surname;
     private String company_email;
     private String personal_email;
@@ -21,7 +22,7 @@ public class EstudianteSearchInputDto {
     private Date terminationDate;
 
     public static EstudianteSearchInputDto getEstudianteSearchInput(Student student){
-        return new EstudianteSearchInputDto(student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
+        return new EstudianteSearchInputDto(student.getName(), student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
                 student.getCity(), student.getNumHoursWeek(), student.getComents(), student.getBranch(),
                 student.isActive(), student.getCreatedDate(),student.getTerminationDate());
     }
