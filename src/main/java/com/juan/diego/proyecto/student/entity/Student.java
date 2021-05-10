@@ -2,12 +2,15 @@ package com.juan.diego.proyecto.student.entity;
 
 
 import com.juan.diego.proyecto.student.enums.Branch;
-import lombok.Data;
+import com.juan.diego.proyecto.student.generators.StringPrefixedSequenceIdGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -17,11 +20,15 @@ import java.util.Date;
 @NoArgsConstructor
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GenericGenerator(
-//            name = "ausencias_seq",
-//            parameters = (name = StringPrefixed)
-//    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estudiantes_seq")
+    @GenericGenerator(
+            name = "estudiantes_seq",
+            strategy = "com.juan.diego.proyecto.student.generators.StringPrefixedSequenceIdGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EST"),
+                    @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")
+            })
     private String idStudent;
     @NotNull
     private String name;
