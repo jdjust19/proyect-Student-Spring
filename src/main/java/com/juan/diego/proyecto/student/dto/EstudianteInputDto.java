@@ -4,14 +4,15 @@ import com.juan.diego.proyecto.student.entity.Student;
 import com.juan.diego.proyecto.student.enums.Branch;
 import com.juan.diego.proyecto.student.exception.StudentBadRequestException;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
 
-import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 @AllArgsConstructor
 @Getter
+@Setter
 public class EstudianteInputDto {
     private String name;
     private String surname;
@@ -21,7 +22,7 @@ public class EstudianteInputDto {
     private Integer numhoursWeek;
     private String comments;
     private Branch branch;
-    private Boolean active;
+    private boolean active;
     private Date createdDate;
     private Date terminationDate;
 
@@ -36,7 +37,7 @@ public class EstudianteInputDto {
             student.setPersonalEmail(personal_email);
             student.setCity(city);
             student.setNumHoursWeek(numhoursWeek);
-            student.setComents(comments);
+            student.setComments(comments);
             student.setBranch(branch);
             student.setActive(active);
             student.setCreatedDate(createdDate);
@@ -48,7 +49,7 @@ public class EstudianteInputDto {
 
     public static EstudianteInputDto getEstudianteInput(Student student){
         return new EstudianteInputDto(student.getName(),student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
-                    student.getCity(), student.getNumHoursWeek(), student.getComents(), student.getBranch(),
+                    student.getCity(), student.getNumHoursWeek(), student.getComments(), student.getBranch(),
                     student.isActive(), student.getCreatedDate(),student.getTerminationDate());
     }
 }

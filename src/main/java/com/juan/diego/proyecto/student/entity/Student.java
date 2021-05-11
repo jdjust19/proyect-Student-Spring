@@ -45,7 +45,7 @@ public class Student {
     @NotNull
     private Integer numHoursWeek;
 
-    private String coments;
+    private String comments;
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private Branch branch;
