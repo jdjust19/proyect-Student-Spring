@@ -25,11 +25,4 @@ public class EstudianteOutputDto {
     private Date createdDate;
     private Date terminationDate;
 
-    public static EstudianteOutputDto getEstudianteOutput(Student student){
-        return new EstudianteOutputDto(student.getIdStudent(), student.getName(), student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
-                student.getCity(), student.getNumHoursWeek(), student.getComments(), student.getBranch(),
-                student.isActive(), student.getCreatedDate(),student.getTerminationDate());
-    }
-
-
 }

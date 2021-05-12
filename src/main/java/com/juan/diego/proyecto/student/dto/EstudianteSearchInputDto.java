@@ -20,9 +20,4 @@ public class EstudianteSearchInputDto {
     private Date createdDate;
     private Date terminationDate;
 
-    public static EstudianteSearchInputDto getEstudianteSearchInput(Student student){
-        return new EstudianteSearchInputDto(student.getName(), student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
-                student.getCity(), student.getNumHoursWeek(), student.getComments(), student.getBranch(),
-                student.isActive(), student.getCreatedDate(),student.getTerminationDate());
-    }
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class StudentBadRequestException extends RuntimeException{
-    public StudentBadRequestException() {
-        super("Los campos introducidos no son validos");
+    public StudentBadRequestException(String message) {
+        super(message);
     }
 }
