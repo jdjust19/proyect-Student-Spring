@@ -3,10 +3,13 @@ package com.juan.diego.proyecto.student.dto;
 import com.juan.diego.proyecto.student.entity.Student;
 import com.juan.diego.proyecto.student.enums.Branch;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 
 import java.util.Date;
 
 @AllArgsConstructor
+@Getter
 public class EstudianteSearchInputDto {
     private String name;
     private String surname;

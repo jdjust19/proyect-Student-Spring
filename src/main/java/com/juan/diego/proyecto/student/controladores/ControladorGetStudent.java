@@ -2,6 +2,7 @@ package com.juan.diego.proyecto.student.controladores;
 
 import com.juan.diego.proyecto.student.dto.EstudianteInputDto;
 import com.juan.diego.proyecto.student.dto.EstudianteOutputDto;
+import com.juan.diego.proyecto.student.dto.EstudianteSearchInputDto;
 import com.juan.diego.proyecto.student.entity.Student;
 import com.juan.diego.proyecto.student.exception.StudentBadRequestException;
 import com.juan.diego.proyecto.student.exception.StudentNotFoundException;
@@ -28,5 +29,10 @@ public class ControladorGetStudent {
     @GetMapping("{id}")
     public EstudianteOutputDto getStudentById(@PathVariable String id) throws StudentNotFoundException {
         return service.getById(id);
+    }
+
+    @GetMapping("/withRequirements")
+    public List<EstudianteOutputDto> getStudentMeetRequirements(@RequestBody EstudianteSearchInputDto estudiante){
+        return service.getData(estudiante);
     }
 }

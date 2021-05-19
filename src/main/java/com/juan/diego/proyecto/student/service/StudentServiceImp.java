@@ -2,17 +2,28 @@ package com.juan.diego.proyecto.student.service;
 
 import com.juan.diego.proyecto.student.dto.EstudianteInputDto;
 import com.juan.diego.proyecto.student.dto.EstudianteOutputDto;
+import com.juan.diego.proyecto.student.dto.EstudianteSearchInputDto;
 import com.juan.diego.proyecto.student.entity.Student;
+import com.juan.diego.proyecto.student.enums.Branch;
 import com.juan.diego.proyecto.student.exception.StudentBadRequestException;
 import com.juan.diego.proyecto.student.exception.StudentNotFoundException;
 import com.juan.diego.proyecto.student.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.*;
 import java.util.stream.Collectors;
 @Service
 public class StudentServiceImp implements IStudentService{
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
     StudentRepository studentRepository;
@@ -65,6 +76,7 @@ public class StudentServiceImp implements IStudentService{
                 if (estudianteInputDto.getCreatedDate()==null)
                     estudianteInputDto.setCreatedDate(studentOrigin.getCreatedDate());
                 Student student = getStudentByEstudianteInputDto(estudianteInputDto);
+                student.setIdStudent(id);
                 studentRepository.save(student);
                 return;
             }
@@ -81,6 +93,76 @@ public class StudentServiceImp implements IStudentService{
         }
         throw new StudentNotFoundException("No existe un usuario con ese id");
     }
+
+    @Override
+    public List<EstudianteOutputDto> getData(EstudianteSearchInputDto estudianteSearchInputDto) {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Student> query = cb.createQuery(Student.class);
+        Root<Student> root = query.from(Student.class);
+        HashMap<String,Object> conditions = new HashMap<>();
+
+        if (estudianteSearchInputDto.getName()!=null)
+            conditions.put("name",estudianteSearchInputDto.getName());
+        if (estudianteSearchInputDto.getSurname()!=null)
+            conditions.put("surname",estudianteSearchInputDto.getSurname());
+        if (estudianteSearchInputDto.getCompany_email()!=null)
+            conditions.put("company_email",estudianteSearchInputDto.getCompany_email());
+        if (estudianteSearchInputDto.getPersonal_email()!=null)
+            conditions.put("personal_email",estudianteSearchInputDto.getPersonal_email());
+        if (estudianteSearchInputDto.getCity()!=null)
+            conditions.put("city",estudianteSearchInputDto.getCity());
+        if (estudianteSearchInputDto.getComments()!=null)
+            conditions.put("comments",estudianteSearchInputDto.getComments());
+        if (estudianteSearchInputDto.getBranch()!=null)
+            conditions.put("branch",estudianteSearchInputDto.getBranch());
+        if (estudianteSearchInputDto.getCreatedDate()!=null)
+            conditions.put("createdDate",estudianteSearchInputDto.getCreatedDate());
+        if (estudianteSearchInputDto.getTerminationDate()!=null)
+            conditions.put("terminationDate",estudianteSearchInputDto.getTerminationDate());
+        if (estudianteSearchInputDto.isActive()!=false)
+            conditions.put("active",estudianteSearchInputDto.isActive());
+
+        List<Predicate> predicates = new ArrayList<>();
+        conditions.forEach((field,value)->{
+            switch (field){
+                case "name":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "surname":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "company_email":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "personal_email":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "city":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "comments":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "branch":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "createdDate":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "terminationDate":
+                    predicates.add(cb.like(root.get(field),"%"+(String) value+"%"));
+                    break;
+                case "active":
+                    predicates.add(cb.equal(root.get(field),(Boolean) value));
+                    break;
+            }
+        });
+        query.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
+         List<Student> students = entityManager.createQuery(query).getResultList();
+         return students.stream().map(e-> getEstudianteOutput(e)).collect(Collectors.toList());
+
+    }
+
 
     private static EstudianteOutputDto getEstudianteOutput(Student student){
         return new EstudianteOutputDto(student.getIdStudent(), student.getName(), student.getSurname(),student.getCompanyEmail(), student.getPersonalEmail(),
