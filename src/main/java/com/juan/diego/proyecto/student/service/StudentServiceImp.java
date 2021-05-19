@@ -4,7 +4,6 @@ import com.juan.diego.proyecto.student.dto.EstudianteInputDto;
 import com.juan.diego.proyecto.student.dto.EstudianteOutputDto;
 import com.juan.diego.proyecto.student.dto.EstudianteSearchInputDto;
 import com.juan.diego.proyecto.student.entity.Student;
-import com.juan.diego.proyecto.student.enums.Branch;
 import com.juan.diego.proyecto.student.exception.StudentBadRequestException;
 import com.juan.diego.proyecto.student.exception.StudentNotFoundException;
 import com.juan.diego.proyecto.student.repository.StudentRepository;
@@ -40,8 +39,23 @@ public class StudentServiceImp implements IStudentService{
         return getEstudianteOutput(student);
     }
 
+    private static final boolean isValidInput=false;
+
+
     @Override
     public void add(EstudianteInputDto estudianteInputDto) throws Exception {
+        if ((estudianteInputDto.getName()==null)
+                && (estudianteInputDto.getSurname()==null)
+                && (estudianteInputDto.getCompany_email()==null)
+                && (estudianteInputDto.getPersonal_email()==null)
+                && (estudianteInputDto.getCity()==null)
+                && (estudianteInputDto.getNumhoursWeek()==null)
+                && (estudianteInputDto.getComments()==null)
+                && (estudianteInputDto.getName()==null)
+                && (estudianteInputDto.getBranch()==null)
+                && (estudianteInputDto.getCreatedDate()==null))
+            throw new StudentBadRequestException("Faltan campos para crear el estudiante");
+
         if (!studentRepository.existsStudentByNameAndSurname(estudianteInputDto.getName(),estudianteInputDto.getSurname())) {
             Student student = getStudentByEstudianteInputDto(estudianteInputDto);
             studentRepository.save(student);

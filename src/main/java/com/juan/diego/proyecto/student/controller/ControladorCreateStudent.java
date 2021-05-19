@@ -1,13 +1,9 @@
-package com.juan.diego.proyecto.student.controladores;
+package com.juan.diego.proyecto.student.controller;
 
 import com.juan.diego.proyecto.student.dto.EstudianteInputDto;
-import com.juan.diego.proyecto.student.dto.EstudianteOutputDto;
-import com.juan.diego.proyecto.student.exception.StudentNotFoundException;
 import com.juan.diego.proyecto.student.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("student")
